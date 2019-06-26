@@ -2,11 +2,11 @@ import socket
 from . import timestamp as ts
 
 class lta():
-	def __init__(self, hostname='localhost', port=8888):
+	def __init__(self, hostname='localhost', port=8888, reading_directory=None):
 		self.hostname = hostname
 		self.port = port
 		self.s = None
-		self.reading_directory = None
+		self.reading_directory = reading_directory
 	
 	def send_msg(self, msg):
 		if self.s is not None:
