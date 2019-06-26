@@ -69,5 +69,5 @@ class lta():
 			self.reading_directory = reading_directory
 		if reading_name is None:
 			reading_name = get_timestamp()
-		lta.do('name ' + self.reading_directory + reading_name + '_')
-		lta.do('read')
+		self.do('name ' + self.reading_directory + reading_name + '_')
+		self.do('read')
