@@ -35,3 +35,17 @@ lta = ltapy.lta()
 lta.do('name /home/me/ccd_reads/')
 lta.do('read')
 ```
+
+There are methods that do common stuff automatically. For example
+
+```Python
+lta.erase_and_purge()
+```
+
+or
+
+```Python
+lta.read()
+```
+
+For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py).
