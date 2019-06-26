@@ -29,7 +29,7 @@ import ltapy
 lta = ltapy.lta()
 ```
 
-3. Send commands to the *lta board* with the ```do``` attribute:
+3. Send commands to the *lta board* with the ```do``` method:
 
 ```Python
 lta.do('name /home/me/ccd_reads/')
