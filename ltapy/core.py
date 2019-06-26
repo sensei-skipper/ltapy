@@ -1,22 +1,24 @@
 import socket
+from timestamp import *
 
 class lta():
 	def __init__(self, hostname='localhost', port=8888):
 		self.hostname = hostname
 		self.port = port
 		self.s = None
+		self.reading_directory = None
 	
-	def write(self, msg):
+	def send_msg(self, msg):
 		if self.s is not None:
-			raise RuntimeError('Before writing again you have to read!')
+			raise RuntimeError('Before sending a msg again you have to receive messages from the LTA using the "receive_msg" method!')
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.s.connect((self.hostname, self.port))
 		self.s.sendall(msg.encode())
 		self.s.shutdown(socket.SHUT_WR)
 	
-	def read(self, verbose=False):
+	def receive_msg(self, verbose=False):
 		if self.s is None:
-			raise RuntimeError('Before reading an answer you have to write a command!')
+			raise RuntimeError('Before receiving a msg you have to send a msg using the "send_msg" method!')
 		data = []
 		while 1:
 			data = data + [self.s.recv(2048)]
@@ -29,6 +31,19 @@ class lta():
 		return data
 	
 	def do(self, msg, verbose=False):
-		self.write(msg)
-		data = self.read(verbose=verbose)
+		self.send_msg(msg)
+		data = self.receive_msg(verbose=verbose)
 		return data
+	
+	def erase_and_purge(self):
+		self.do('exec ccd_erase')
+		self.do('exec ccd_epurge')
+	
+	def read(self, reading_direcotry=self.reading_directory, reading_name=None):
+		if reading_directory is None:
+			raise ValueError('You have to specify a reading directory for saving the files!')
+		self.reading_directory = reading_directory
+		if reading_name is None:
+			reading_name = get_timestamp()
+		lta.do('name ' + self.reading_directory + reading_name + '_')
+		lta.do('read')
