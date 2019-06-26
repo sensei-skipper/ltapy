@@ -48,4 +48,13 @@ or
 lta.read()
 ```
 
-For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py).
+For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py). A complete usage example:
+
+```Python
+import ltapy
+
+lta = ltapy.lta() # Create an lta instance.
+lta.read(reading_directory='/home/lta-test/Desktop/DarMat/reads/') # Launch a reading and specify the reading directory, where the files will be stored.
+lta.erase_and_purge() # Erase and purge the CCD.
+lta.read() # The reading directory is the same as before.
+```
