@@ -39,7 +39,7 @@ class lta():
 		self.do('exec ccd_erase')
 		self.do('exec ccd_epurge')
 	
-	def read(self, reading_directory=self.reading_directory, reading_name=None):
+	def read(self, reading_directory=None, reading_name=None):
 		if self.reading_directory is None:
 			if reading_directory is None:
 				raise ValueError('You have to specify a reading directory for saving the files!')
