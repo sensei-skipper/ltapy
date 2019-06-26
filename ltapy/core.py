@@ -40,9 +40,10 @@ class lta():
 		self.do('exec ccd_epurge')
 	
 	def read(self, reading_directory=self.reading_directory, reading_name=None):
-		if reading_directory is None:
-			raise ValueError('You have to specify a reading directory for saving the files!')
-		self.reading_directory = reading_directory
+		if self.reading_directory is None:
+			if reading_directory is None:
+				raise ValueError('You have to specify a reading directory for saving the files!')
+			self.reading_directory = reading_directory
 		if reading_name is None:
 			reading_name = get_timestamp()
 		lta.do('name ' + self.reading_directory + reading_name + '_')
