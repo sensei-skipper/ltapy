@@ -48,3 +48,21 @@ class lta():
 			reading_name = ts.get_timestamp()
 		self.do('name ' + self.reading_directory + reading_name + '_')
 		self.do('read')
+	
+	def get_params(self, params):
+		"""
+		Return the values of the parameters in the list <params>.
+		Example:
+		lta.get_params(['NCOLS', 'NROWS'])
+		"""
+		extra = str(self.do('extra'))
+		getall = str(self.do('get all'))
+		vals = [None]*len(params)
+		for idx,p in enumerate(params):
+			if p in extra:
+				vals[idx] = extra[extra.find(p)+len(p)+3 : extra.find(',', extra.find(p)+len(p)+3)]
+			elif p in getall:
+				vals[idx] = getall[getall.find(p)+len(p)+3 : getall.find('\\', getall.find(p)+len(p)+3)]
+			else:
+				raise ValueError('Cannot find parameter "' + p + '" neither in "lta extra" nor in "lta get all"')
+		return vals
