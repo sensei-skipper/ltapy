@@ -9,6 +9,7 @@ class lta():
 		self.reading_directory = reading_directory
 	
 	def send_msg(self, msg):
+		""" Sends a msg to the LTA board. You should not need to use this method, it is used internally. """
 		if self.s is not None:
 			raise RuntimeError('Before sending a msg again you have to receive messages from the LTA using the "receive_msg" method!')
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,6 +18,7 @@ class lta():
 		self.s.shutdown(socket.SHUT_WR)
 	
 	def receive_msg(self, verbose=False):
+		""" Receive a msg from the LTA. You should not need to use this method, it is used internally. """
 		if self.s is None:
 			raise RuntimeError('Before receiving a msg you have to send a msg using the "send_msg" method!')
 		data = []
@@ -31,6 +33,17 @@ class lta():
 		return data
 	
 	def do(self, msg, verbose=False):
+		"""
+		Send a command to the LTA for execution. 
+		msg: str
+			The command.
+		verbose: bool
+			If true then the response from the LTA is printed out in screen.
+		Examples:
+		lta.do('NROW 10')
+		lta.do('read')
+		lta.do('exec ccd_erase')
+		"""
 		self.send_msg(msg)
 		data = self.receive_msg(verbose=verbose)
 		return data
@@ -51,6 +64,8 @@ class lta():
 		Examples:
 		lta.read() # This reads using default configuration and names the file with a timestamp
 		lta.read(NROW = 10) # This reads with NROW = 10 and then returns the value of NROW to that prior to the reading.
+		lta.read(reading_name='strange_params', NROW=10, NCOL=1000, NSAMP=2)
+		lta.read(reading_name='read_using_default_config')
 		"""
 		if self.reading_directory is None:
 			if reading_directory is None:
