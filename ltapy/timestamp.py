@@ -10,15 +10,16 @@ def get_timestamp():
 	Returns
 	-------
 	str
-		String containing the timestamp. Format isYYYYMMDDHHMMSSmmmmmm.
+		String containing the timestamp. Format is yyMMDDHHMMSS.
 	
 	Example
 	-------	
 	>>> get_timestamp()
-	'20181013234913378084'
+	'190703131952'
 	>>> [get_timestamp(), get_timestamp()]
-	['20181013235501158401', '20181013235501158583']
+	['190703132007', '190703132008']
+
 	"""
-	timestamp = datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')
-	sleep(10e-6) # This ensures that there will not exist two equal timestamps.
+	timestamp = datetime.datetime.now().strftime('%y%m%d%H%M%S')
+	sleep(1) # This ensures that there will not exist two equal timestamps.
 	return timestamp
