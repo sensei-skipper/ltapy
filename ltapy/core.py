@@ -52,13 +52,15 @@ class lta():
 		self.do('exec ccd_erase')
 		self.do('exec ccd_epurge')
 	
-	def read(self, reading_directory=None, reading_name=None, **current_reading_params):
+	def read(self, reading_directory=None, reading_name=None, timestamp=True, **current_reading_params):
 		"""
 		Reads data from the CCD.
 		reading_directory: str
 			If not provided the default is used.
 		reading_name: str
-			If not provided a tiemstamp is used.
+			A name for the current reading for the file.
+		timestamp: bool (default is True)
+			If True then the filename for the current reading will have a unique timestamp as prefix.
 		**current_reading_params:
 			Any param that the LTA accepts. E.g. NCOLS. These params are modified only for the current reading. After reading they are returned to the value they had before calling this function.
 		Examples:
@@ -69,13 +71,18 @@ class lta():
 		"""
 		if self.reading_directory is None:
 			if reading_directory is None:
-				raise ValueError('You have to specify a reading directory for saving the files!')
+				raise ValueError('Dude, you have to specify a reading directory for reading!!')
 		if len(current_reading_params) != 0:
 			current_vals = self.get_params(list(current_reading_params.keys()))
 			for key, val in current_reading_params.items():
 				self.do(str(key) + ' ' + str(val))
-		if reading_name is None:
-			reading_name = ts.get_timestamp()
+		if reading_name is None and timestamp is False:
+			raise ValueError('Hey, you tell me not to use a timestamp (i.e. "timestamp=False") and you didn\'t provided me a "reading_name"... You must provide at least one of them!')
+		else:
+			if reading_name is None:
+				reading_name = ''
+			if timestamp is True:
+				reading_name = ts.get_timestamp() + '_' + reading_name
 		self.do('name ' + (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_')
 		self.do('read')
 		if len(current_reading_params) != 0:
