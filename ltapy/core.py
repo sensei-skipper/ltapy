@@ -6,7 +6,7 @@ class lta():
 		self.hostname = hostname
 		self.port = port
 		self.s = None
-		self.reading_directory = reading_directory
+		self.reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
 	
 	def send_msg(self, msg):
 		""" Sends a msg to the LTA board. You should not need to use this method, it is used internally. """
@@ -83,6 +83,8 @@ class lta():
 				reading_name = ''
 			if timestamp is True:
 				reading_name = ts.get_timestamp() + '_' + reading_name
+		if reading_directory is not None:
+			reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
 		self.do('name ' + (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_')
 		self.do('read')
 		if len(current_reading_params) != 0:
