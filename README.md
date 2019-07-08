@@ -49,7 +49,11 @@ or
 lta.read()
 ```
 
-For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py). Below there are some examples.
+For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py). 
+
+## Examples
+
+Below there are some examples.
 
 ```Python
 import ltapy
