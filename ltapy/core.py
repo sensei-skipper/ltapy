@@ -1,12 +1,14 @@
 import socket
 from . import timestamp as ts
+import os
 
 class lta():
-	def __init__(self, hostname='localhost', port=8888, reading_directory=None):
+	def __init__(self, hostname='localhost', port=8888, reading_directory=None, delete_dats=True):
 		self.hostname = hostname
 		self.port = port
 		self.s = None
 		self.reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
+		self.delete_dats = delete_dats # If True then the '.dat' files created during reading are deleted automatically.
 	
 	def send_msg(self, msg):
 		""" Sends a msg to the LTA board. You should not need to use this method, it is used internally. """
@@ -85,13 +87,17 @@ class lta():
 				reading_name = ts.get_timestamp() + '_' + reading_name
 		if reading_directory is not None:
 			reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
-		self.do('name ' + (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_')
+		reading_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_'
+		self.do('name ' + reading_name)
 		self.do('read')
-		if len(current_reading_params) != 0:
+		if len(current_reading_params) != 0: # Return params to their original values.
 			idx = 0
 			for key, val in current_reading_params.items():
 				self.do(str(key) + ' ' + current_vals[idx])
 				idx += 1
+		os.rename(reading_name[:reading_name.rfind('_')] + '.fits') # Remove the annoying number that the daemon appends.
+		if self.delete_dats is True:
+			os.delete(reading_name[:-5] + '*.dat')
 	
 	def get_params(self, params):
 		"""
