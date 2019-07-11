@@ -87,7 +87,8 @@ class lta():
 				reading_name = ts.get_timestamp() + '_' + reading_name
 		if reading_directory is not None:
 			reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
-		self.do('name ' + (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_')
+		lta_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_'
+		self.do('name ' + lta_name)
 		self.do('read')
 		if len(current_reading_params) != 0:
 			idx = 0
@@ -95,7 +96,7 @@ class lta():
 				self.do(str(key) + ' ' + current_vals[idx])
 				idx += 1
 		if self.delete_dats is True:
-			os.delete(reading_name[:-5] + '*.dat')
+			os.system('rm ' + lta_name + '*.dat')
 	
 	def get_params(self, params):
 		"""
