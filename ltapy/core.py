@@ -87,7 +87,7 @@ class lta():
 				reading_name = ts.get_timestamp() + '_' + reading_name
 		if reading_directory is not None:
 			reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
-		lta_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_'
+		lta_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + ('' if reading_name[-1] == '_' else '_')
 		self.do('name ' + lta_name)
 		self.do('read')
 		if len(current_reading_params) != 0:
@@ -97,6 +97,10 @@ class lta():
 				idx += 1
 		if self.delete_dats is True:
 			os.system('rm ' + lta_name + '*.dat')
+		for File in os.listdir(lta_name[:lta_name.rfind('/')]): # Remove the annoying number the ltaDaemon appends.
+			if lta_name[lta_name.rfind('/')+1:] in File:
+				File_full_path = lta_name[:lta_name.rfind('/')] + '/' + File
+				os.rename(File_full_path, File_full_path[:File_full_path.rfind('_')] + '.fits')
 	
 	def get_params(self, params):
 		"""
