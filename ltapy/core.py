@@ -87,7 +87,7 @@ class lta():
 				reading_name = ts.get_timestamp() + '_' + reading_name
 		if reading_directory is not None:
 			reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
-		lta_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + '_'
+		lta_name = (reading_directory if reading_directory is not None else self.reading_directory) + reading_name + ('' if reading_name[-1] == '_' else '_')
 		self.do('name ' + lta_name)
 		self.do('read')
 		if len(current_reading_params) != 0:
