@@ -1,6 +1,6 @@
 # ltapy
 
-Command the LTA board from Python, be happy!
+Use the LTA board from Python, be happy!
 
 ## Instalation
 
@@ -39,10 +39,11 @@ lta = ltapy.lta(reading_directory='/home/me/lta_reads')
 3. Make readings
 
 ```Python
-lta.read(NSAMP=247, NCOL=25, NROW=50, reading_name='such_a_measurement', timestamp=True)
+lta.read() # Default file name is a timestamp.
+lta.read(NSAMP=247, NCOL=25, NROW=50, reading_name='such_a_measurement', timestamp=True) # This configuration is only used for this reading. After reading, all is brought back to the previous state.
 ```
 
-4. You can send any command you like with the ```do``` method:
+4. You can also send any command you like with the ```do``` method:
 
 ```Python
 lta.do('name /home/me/new_reading_dir')
