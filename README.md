@@ -4,10 +4,16 @@ Command the LTA board from Python, be happy!
 
 ## Instalation
 
-Make sure you have ```pip``` installed. Then run:
+For Python 2 run
 
 ```
 pip install git+https://github.com/SengerM/ltapy
+```
+
+or for Python 3
+
+```
+pip3 install git+https://github.com/SengerM/ltapy
 ```
 
 ## Usage
@@ -27,29 +33,24 @@ import ltapy
 2. Then create an instance of the ```lta``` class:
 
 ```Python
-lta = ltapy.lta()
+lta = ltapy.lta(reading_directory='/home/me/lta_reads')
 ```
 
-3. Send commands to the *lta board* with the ```do``` method:
+3. Make readings
 
 ```Python
-lta.do('name /home/me/ccd_reads/')
-lta.do('read')
+lta.read(NSAMP=247, NCOL=25, NROW=50, reading_name='such_a_measurement', timestamp=True)
 ```
 
-There are methods that do common stuff automatically. For example
+4. You can send any command you like with the ```do``` method:
 
 ```Python
-lta.erase_and_purge()
+lta.do('name /home/me/new_reading_dir')
+lta.do('read') # Reading in the old school way
+lta.do('NSAMP 100')
 ```
 
-or
-
-```Python
-lta.read()
-```
-
-For usage see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py). 
+For more information please see [the source code](https://github.com/SengerM/ltapy/blob/master/ltapy/core.py). 
 
 ## Examples
 
