@@ -20,9 +20,17 @@ pip3 install git+https://github.com/sensei-skipper/ltapy.git
 
 ### Before running Python
 
-Before running Python: run the *lta daemon* in a terminal. Then initialize the lta. Once the lta is responding, then we can go to Python. I.e. you first have to run ```./configure.exe``` in the *ltaDaemon* directory and ```source init_skp_lta_v2.sh```. After that you can use *ltapy*.
+Before running Python: 
+
+1. Run the *lta daemon* in a terminal. For that purpose you have to run ```./configure.exe``` in the *ltaDaemon* directory, and **do not close this terminal**. Keep it opened.
+
+2. Open a new terminal, go to the directory where you have run the *lta daemon* before and run ```source init_skp_lta_v2.sh```. 
+
+After that you can use *ltapy* in the second terminal (the one in which you run ```source init_skp_lta_v2.sh```). Keep the first terminal with the *lta daemon* opened at all the time.
 
 ### Once in Python
+
+You have to run Python in the second terminal of the previous steps in *before running Python*.
 
 1. Import the *ltapy* module:
 
