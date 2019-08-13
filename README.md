@@ -7,13 +7,13 @@ Use the LTA board from Python, be happy!
 For Python 2 run
 
 ```
-pip install git+https://github.com/SengerM/ltapy
+pip install git+https://github.com/sensei-skipper/ltapy.git
 ```
 
 or for Python 3
 
 ```
-pip3 install git+https://github.com/SengerM/ltapy
+pip3 install git+https://github.com/sensei-skipper/ltapy.git
 ```
 
 ## Usage
