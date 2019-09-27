@@ -3,12 +3,11 @@ from . import timestamp as ts
 import os
 
 class lta():
-	def __init__(self, hostname='localhost', port=8888, reading_directory=None, delete_dats = True):
+	def __init__(self, hostname='localhost', port=8888, reading_directory=None):
 		self.hostname = hostname
 		self.port = port
 		self.s = None
 		self.reading_directory = reading_directory if reading_directory[-1] == '/' else reading_directory + '/'
-		self.delete_dats = delete_dats # If True then the '.dat' files created for reading are automatically deleted.
 	
 	def send_msg(self, msg):
 		""" Sends a msg to the LTA board. You should not need to use this method, it is used internally. """
@@ -95,8 +94,6 @@ class lta():
 			for key, val in current_reading_params.items():
 				self.do(str(key) + ' ' + current_vals[idx])
 				idx += 1
-		if self.delete_dats is True:
-			os.system('rm ' + lta_name + '*.dat')
 		for File in os.listdir(lta_name[:lta_name.rfind('/')]): # Remove the annoying number the ltaDaemon appends.
 			if lta_name[lta_name.rfind('/')+1:] in File:
 				File_full_path = lta_name[:lta_name.rfind('/')] + '/' + File
