@@ -73,7 +73,7 @@ for nsamp in [1, 100, 200, 300, 400]:
     lta.name("skp_nsamp_{0}".format{nsamp})
     doSkipper(lta, ncol, nrow, nsamp)
     
-    
+print("testing has been completed")    
 
 
 

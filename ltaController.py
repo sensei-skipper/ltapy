@@ -7,8 +7,8 @@ class lta():
         self.port = port
         self.reading_directory = reading_directoray
 
-        self.img_sequencer = 'sequencer_C.xml'
-        self.clean_sequencer = 'sequencer_clear_C.xml'
+        self.img_sequencer = 'sequencers/sequencer_C.xml'
+        self.clean_sequencer = 'sequencers/sequencer_clear_C.xml'
 
     
     def sendMsg(self, msg, verbose=False):
