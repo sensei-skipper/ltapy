@@ -52,6 +52,11 @@ def doSkipper(lta, ncol, nrow, nsamp=1, ssamp=200, sinit=30, pinit=0):
     
 
 
+path = os.getcwd() + '/datafolder/'
+try: 
+    os.mkdir(path) 
+except OSError as error: 
+    print(error)
 
 lta = ltaController.lta()
 init(lta)
@@ -59,7 +64,7 @@ init(lta)
 doClean(lta)
 doClean(lta)
 
-lta.name("lta_img_")
+lta.name(path + "lta_img_")
 doSkipper(lta, 50, 3272, 1)
 
 exposure=30
@@ -70,7 +75,7 @@ for nsamp in [1, 100, 200, 300, 400]:
     print("Exposing the LTA for {0} seconds".format(exposure))
     time.sleep(exposure)
 
-    lta.name("skp_nsamp_{0}".format{nsamp})
+    lta.name(path + "skp_nsamp_{0}".format{nsamp})
     doSkipper(lta, ncol, nrow, nsamp)
     
 print("testing has been completed")    
